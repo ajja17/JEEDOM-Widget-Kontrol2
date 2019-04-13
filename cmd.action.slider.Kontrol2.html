@@ -72,8 +72,17 @@
                 displayInput: false,
 				noScroll : false,
               	stopper: true,
-                change: function(v) {
-                jeedom.cmd.execute({id: '#id#', value: {slider: v}});
+               change: function(v) {
+                      if (typeof timerHandle !== 'undefined') {
+                        clearTimeout(timerHandle);
+                          timerHandle = setTimeout(function() {
+                            jeedom.cmd.execute({id: '#id#', value: {slider: v}});
+                          }, 1000)
+                      } else {
+                          timerHandle = setTimeout(function() {
+                            jeedom.cmd.execute({id: '#id#', value: {slider: v}});
+                          }, 1000)
+                      }
                 }
             });
         });
